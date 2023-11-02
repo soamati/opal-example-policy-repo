@@ -109,3 +109,31 @@ neighbour_is_property_member {
   data.neighbours_residencies_links[i].neighbour_id == input.neighbour
   data.neighbours_residencies_links[i].property_id == input.property
 }
+
+default neighbour_is_property_owner = false
+
+neighbour_is_property_owner {
+  some i
+  data.neighbours_properties_links[i].neighbour_id == input.neighbour
+  data.neighbours_properties_links[i].property_id == input.property
+}
+
+# check if user can view community
+allow {
+  neighbour := input.neighbour
+  community := input.community
+  action := input.action
+  object := input.object
+  type := input.type
+
+  action == "view"
+  type == "community"
+
+  some i
+  pcl := data.properties_community_links
+  properties := [property | pcl[i].community_id == community; property := pcl[i].property_id]
+
+  some j, k
+  data.neighbours_properties_links[j].neighbour_id == input.neighbour
+  data.neighbours_properties_links[j].property_id == properties[k]
+}
