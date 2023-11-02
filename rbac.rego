@@ -101,3 +101,9 @@ user_is_granted[permission] {
 	# `permission` assigned a single permission from the permissions list for 'role'...
 	permission := data.role_permissions[role][j]
 }
+
+neighbour_is_property_member {
+  some i
+  data.neighbours_residencies_links[i].neighbour_id == input.neighbour
+  data.neighbours_residencies_links[i].property_id == input.property
+}
