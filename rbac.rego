@@ -121,15 +121,13 @@ neighbour_is_property_owner {
 # check if user can view community
 allow {
   neighbour := input.neighbour
-  community := input.community
   action := input.action
-  object := input.object
+  community := input.object
   type := input.type
 
   action == "view"
   type == "community"
 
-  some i
   pcl := data.properties_community_links
   properties := [property | pcl[i].community_id == community; property := pcl[i].property_id]
 
