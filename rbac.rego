@@ -129,9 +129,11 @@ allow {
   type == "community"
 
   pcl := data.properties_community_links
-  properties := [property | pcl[i].community_id == community; property := pcl[i].property_id]
+  cp := [property | pcl[i].community_id == community; property := pcl[i].property_id]
 
-  some j, k
-  data.neighbours_properties_links[j].neighbour_id == input.neighbour
-  data.neighbours_properties_links[j].property_id == properties[k]
+  npl := data.neighbours_properties_links
+  np := [property | npl[i].neighbour_id == neighbour; property := npl[i].property_id]
+
+  some j
+  cp[j].property_id == np[j].property_id
 }
