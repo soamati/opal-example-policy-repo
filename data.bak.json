@@ -14,7 +14,7 @@
         "ip": "8.8.8.8"
       }
     },
-     "sunil": {
+    "sunil": {
       "roles": ["guest"],
       "location": {
         "country": "US",
@@ -77,14 +77,14 @@
       }
     ],
     "guest": [
-     {
-       "action": "read",
-       "type": "cat"
-     },
-     {
-       "action": "read",
-       "type": "finance"
-     }
+      {
+        "action": "read",
+        "type": "cat"
+      },
+      {
+        "action": "read",
+        "type": "finance"
+      }
     ]
   }
 }
