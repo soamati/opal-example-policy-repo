@@ -102,6 +102,8 @@ user_is_granted[permission] {
 	permission := data.role_permissions[role][j]
 }
 
+default neighbour_is_property_member = false
+
 neighbour_is_property_member {
   some i
   data.neighbours_residencies_links[i].neighbour_id == input.neighbour
