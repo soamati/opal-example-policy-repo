@@ -114,22 +114,22 @@ neighbour_is_property_owner {
   data.neighbours_properties_links[i].property_id == input.property
 }
 
-# check if user can view community
+# neighbour can view community
 allow {
-  neighbour := input.neighbour
-  action := input.action
-  community := input.object
-  type := input.type
+  input.action == "view"
+  input.type == "community"
 
-  action == "view"
-  type == "community"
+  community_properties := get_community_properties(input.object)
+  neighbour_properties := get_neighbour_properties(input.neighbour)
 
-  pc_links := data.properties_community_links
-  community_properties := [link.property_id | link := pc_links[_]; link.community_id == community]
+  some i
+  community_properties[i] == neighbour_properties[i]
+}
 
-  np_links := data.neighbours_properties_links
-  neighbour_properties := [link.property_id | link := np_links[_]; link.neighbour_id == neighbour]
+get_community_properties(community) := properties {
+  properties := [link.property_id | link := data.properties_community_links[_]; links.community_id == community]
+}
 
-  some j
-  community_properties[j] == neighbour_properties[j]
+get_neighbour_properties(neighbour) := properties {
+  properties := [link.property_id | link := data.neighbours_properties_links[_]; link.neighbour_id == neighbour]
 }
