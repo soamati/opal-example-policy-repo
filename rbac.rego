@@ -24,10 +24,6 @@ package app.rbac
 # By default, deny requests
 default allow = false
 
-foo {
-  1 == 1
-}
-
 # Allow admins to do anything
 allow {
 	user_is_admin
@@ -128,12 +124,12 @@ allow {
   action == "view"
   type == "community"
 
-  pcl := data.properties_community_links
-  cp := [property | pcl[i].community_id == community; property := pcl[i].property_id]
+  pc_links := data.properties_community_links
+  community_properties := [link.property_id | link := pc_links[_]; link.community_id == community]
 
-  npl := data.neighbours_properties_links
-  np := [property | npl[i].neighbour_id == neighbour; property := npl[i].property_id]
+  np_links := data.neighbours_properties_links
+  neighbour_properties := [link.property_id | link := np_links[_]; link.community_id == neighbour]
 
   some j
-  cp[j].property_id == np[j].property_id
+  community_properties[j] == neighbour_properties[j]
 }
