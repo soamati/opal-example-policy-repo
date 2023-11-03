@@ -122,12 +122,11 @@ allow {
   community_properties := get_community_properties(input.object)
   neighbour_properties := get_neighbour_properties(input.neighbour)
 
-  some i
-  community_properties[i] == neighbour_properties[i]
+  community_properties[_] == neighbour_properties[_]
 }
 
 get_community_properties(community) := properties {
-  properties := [link.property_id | link := data.properties_community_links[_]; links.community_id == community]
+  properties := [link.property_id | link := data.properties_community_links[_]; link.community_id == community]
 }
 
 get_neighbour_properties(neighbour) := properties {
