@@ -128,7 +128,7 @@ allow {
   community_properties := [link.property_id | link := pc_links[_]; link.community_id == community]
 
   np_links := data.neighbours_properties_links
-  neighbour_properties := [link.property_id | link := np_links[_]; link.community_id == neighbour]
+  neighbour_properties := [link.property_id | link := np_links[_]; link.neighbour_id == neighbour]
 
   some j
   community_properties[j] == neighbour_properties[j]
